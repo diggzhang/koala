@@ -1,9 +1,4 @@
-var koa = require('koa');
-var app = koa();
-var port = process.argv[2];
+require('babel/register');
 
-app.listen(port);
+module.exports = require('./src/server');
 
-app.use(function *() {
-    this.body = 'hello'
-});
