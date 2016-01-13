@@ -1,0 +1,11 @@
+{
+  "name": "koala",
+  "version": "1.0.0",
+  "description": "the complete restful koajs app, use for event request server now :)",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "author": "diggzhang",
+  "license": "ISC"
+}
