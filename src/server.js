@@ -1,51 +1,60 @@
+import fs from 'fs';
 import koa from 'koa';
 import router from 'koa-router';
 import logger from 'koa-logger';
 import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
+import mongoose from 'mongoose';
 import { server } from './config';
-import model from './models/user';
-import mongoose from 'koa-mongoose';
-import mongooseq from 'mongoose-q';
 
-const app = koa();
+/**
+ * server
+ */
+
 const port = server.port;
+const app = koa();
 const koaRouter  = router();
-const dbConfig = {
-  mongoose: require('mongoose-q')(),
-  user: '',
-  pass: '',
-  host: '10.8.8.111',
-  port: 27017,
-  database: 'test',
-  db: {
-    native_parser: true
-  },
-  server: {
-    poolSize: 5
-  }
-};
 
+/**
+ *Connect to database
+ */
+
+mongoose.connect(server.mongo.url);
+mongoose.connection.on("error", function (err) {
+  console.log(err);
+});
+
+/**
+ * Load the models
+ */
+
+const modelsPath = "./models";
+fs.readdirSync(modelsPath).forEach(function (file) {
+  if(~file.indexOf("js")) {
+    require(modelsPath + "/" + file);
+  }
+});
+
+/**
+ * routes
+ */
 
 koaRouter
   .get('/', function *(next) {
     this.body = "hello world";
   })
-  .post('/user', function *(next) {
-    let user = new User({
-      user: "hello",
-      password: "wowwow"
-    });
-    yield user.saveQ();
-    this.body = 'OK';
+  .get('/404', function *(next) {
+    this.body = "page not found"
+  })
+  .get('/500', function *(next) {
+    this.body = "internal server error"
   });
 
 app.use(logger())
   .use(bodyParser())
   .use(json())
-  .use(mongoose(dbConfig))
   .use(koaRouter.routes());
 
 app.listen(port);
 
-console.log(`listening on port: ${port}`);
+console.log(`Listening on port: ${port}`);
