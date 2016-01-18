@@ -15,6 +15,10 @@ const defaultOptions = {
   server: {
     port: 4500,
   },
+  mongo: {
+    url: "mongodb://localhost/koala_dev",
+  },
 };
+
 
 export default _.merge(defaultOptions, envConfig);

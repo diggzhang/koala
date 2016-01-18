@@ -1,60 +1,86 @@
+"use strict";
 import fs from 'fs';
 import koa from 'koa';
-import router from 'koa-router';
+import Router from 'koa-router';
 import logger from 'koa-logger';
 import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
-import { server } from './config';
+import { server,mongo } from './config';
+import requireDir from 'require-dir';
 
 /**
- * server
+ * Server configure
  */
 
 const port = server.port;
 const app = koa();
-const koaRouter  = router();
+app.use(logger())
+  .use(bodyParser())
+  .use(json());
 
 /**
- *Connect to database
+ * Connect to database
  */
 
-mongoose.connect(server.mongo.url);
+mongoose.connect(mongo.url);
 mongoose.connection.on("error", function (err) {
-  console.log(err);
+  console.log(err)
+});
+
+mongoose.connection.on("connected", function () {
+  console.log("Database connected to " + mongo.url);
+
+  /**
+   * Require models after database connected
+   */
+  requireDir('./models', {recurse: true});
+
+  /**
+   * Init Router
+   */
+  let router = new Router({
+    prefix: '/api/'
+  });
+
+  require('./routes')(router);
+
+  app
+    .use(router.routes())
+    .use(router.allowedMethods());
+
+  app.listen(port);
+  console.log(`Backend server listening on port ${port}`);
 });
 
 /**
- * Load the models
+ * MongoDB error.
  */
+mongoose.connection.on('error', err => {
+  console.error(err);
+  console.info('Mongo server connected error, exit process.');
+  process.exit(1);
+});
 
-const modelsPath = "./models";
-fs.readdirSync(modelsPath).forEach(function (file) {
-  if(~file.indexOf("js")) {
-    require(modelsPath + "/" + file);
+/**
+ * Do something after MongoDB disconnected.
+ */
+mongoose.connection.on('disconnected', () => {
+  console.error('Database disconnected.');
+  console.info('Exit process.');
+  process.exit(1);
+});
+
+/**
+ * Stop the process when press Ctrl+c.
+ */
+process.on('SIGINT', () => {
+  console.warn('App exit.');
+  if (mongoose.connection.readyState === 1) {
+    mongoose.connection.close();
+  } else {
+    process.exit(0);
   }
 });
 
-/**
- * routes
- */
-
-koaRouter
-  .get('/', function *(next) {
-    this.body = "hello world";
-  })
-  .get('/404', function *(next) {
-    this.body = "page not found"
-  })
-  .get('/500', function *(next) {
-    this.body = "internal server error"
-  });
-
-app.use(logger())
-  .use(bodyParser())
-  .use(json())
-  .use(koaRouter.routes());
-
-app.listen(port);
-
-console.log(`Listening on port: ${port}`);
+module.exports = app;

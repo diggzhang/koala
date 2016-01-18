@@ -1,18 +1,18 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+"use strict";
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
 
 /**
- * Schema
+ * Count Schema
  */
-
-let countSchema = new Schema({
-  value: {type: Number, default: 0},
-  updated: {type: Date, default: Date.now}
+var CountSchema = new Schema({
+  value: { type: Number, default: 0 },
+  updated: { type: Date, default: Date.now },
 });
 
-countSchema.pre("save", function (next) {
+CountSchema.pre("save", function(next) {
   this.updated = new Date();
   next();
 });
 
-mongoose.model('Count', userSchema);
+mongoose.model("Count", CountSchema);
