@@ -6,7 +6,7 @@ exports.getCount = function *() {
   var count = yield Count.findOne().exec();
   if (!count) {
     count = new Count();
-  }
+  };
   this.body = { count: count.value };
 };
 
@@ -17,7 +17,7 @@ exports.increment = function *() {
   }
   ++count.value;
 
-  yield count.save()
+  yield count.save();
   this.body = { count: count.value };
 };
 
@@ -31,7 +31,3 @@ exports.decrement = function *() {
   yield count.save();
   this.body = { count: count.value };
 };
-
-exports.wow = function *() {
-  this.body = { username:"diggzhang", password: "IDxasd3x"};
-}

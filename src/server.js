@@ -34,11 +34,13 @@ mongoose.connection.on("connected", function () {
   /**
    * Require models after database connected
    */
+
   requireDir('./models', {recurse: true});
 
   /**
    * Init Router
    */
+
   let router = new Router({
     prefix: '/api/'
   });
@@ -56,6 +58,7 @@ mongoose.connection.on("connected", function () {
 /**
  * MongoDB error.
  */
+
 mongoose.connection.on('error', err => {
   console.error(err);
   console.info('Mongo server connected error, exit process.');
@@ -65,6 +68,7 @@ mongoose.connection.on('error', err => {
 /**
  * Do something after MongoDB disconnected.
  */
+
 mongoose.connection.on('disconnected', () => {
   console.error('Database disconnected.');
   console.info('Exit process.');
@@ -74,6 +78,7 @@ mongoose.connection.on('disconnected', () => {
 /**
  * Stop the process when press Ctrl+c.
  */
+
 process.on('SIGINT', () => {
   console.warn('App exit.');
   if (mongoose.connection.readyState === 1) {

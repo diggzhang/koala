@@ -5,15 +5,17 @@ var Schema = mongoose.Schema;
 /**
  * Count Schema
  */
-var CountSchema = new Schema({
+
+var sessionSchema = new Schema({
   value: { type: Number, default: 0 },
   updated: { type: Date, default: Date.now },
-  created: { type: Date, default: Date.now }
+  created: { type: Date, default: Date.now },
+  userAction: { type: String }
 });
 
-CountSchema.pre("save", function(next) {
+sessionSchema.pre("save", function(next) {
   this.updated = new Date();
   next();
 });
 
-mongoose.model("Count", CountSchema);
+mongoose.model("Session", sessionSchema);
