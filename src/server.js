@@ -1,12 +1,10 @@
-"use strict";
-import fs from 'fs';
 import koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
 import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
-import { server,mongo } from './config';
+import { server, mongo } from './config';
 import requireDir from 'require-dir';
 
 /**
@@ -24,25 +22,25 @@ app.use(logger())
  */
 
 mongoose.connect(mongo.url);
-mongoose.connection.on("error", function (err) {
-  console.log(err)
+mongoose.connection.on('error', (err) => {
+  console.log(err);
 });
 
-mongoose.connection.on("connected", function () {
-  console.log("Database connected to " + mongo.url);
+mongoose.connection.on('connected', () => {
+  console.log('Database connected to ' + mongo.url);
 
   /**
    * Require models after database connected
    */
 
-  requireDir('./models', {recurse: true});
+  requireDir('./models', { recurse: true });
 
   /**
    * Init Router
    */
 
-  let router = new Router({
-    prefix: '/api/'
+  const router = new Router({
+    prefix: '/api/',
   });
 
   require('./routes')(router);
