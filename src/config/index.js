@@ -16,7 +16,13 @@ const defaultOptions = {
     port: 4500,
   },
   mongo: {
-    url: "mongodb://localhost/koala_dev",
+    url: "mongodb://10.8.8.111/koala_dev",
+    opt: {
+      "server": {
+        "socketOptions": {"keepAlive": 1},
+        "poolSize": 100
+      }
+    },
   },
 };
 

@@ -15,20 +15,19 @@ import requireDir from 'require-dir';
 
 const port = server.port;
 const app = koa();
-app.use(logger())
-  .use(bodyParser())
-  .use(json());
+
 
 /**
  * Connect to database
  */
 
-mongoose.connect(mongo.url);
-mongoose.connection.on("error", function (err) {
+mongoose.connect(mongo.url, mongo.opt);
+
+mongoose.connection.on("error", err => {
   console.log(err)
 });
 
-mongoose.connection.on("connected", function () {
+mongoose.connection.on("connected", () => {
   console.log("Database connected to " + mongo.url);
 
   /**
@@ -36,23 +35,10 @@ mongoose.connection.on("connected", function () {
    */
 
   requireDir('./models', {recurse: true});
+  require('./config/middleware')(app);
 
-  /**
-   * Init Router
-   */
-
-  let router = new Router({
-    prefix: '/api/'
-  });
-
-  require('./routes')(router);
-
-  app
-    .use(router.routes())
-    .use(router.allowedMethods());
-
-  app.listen(port);
-  console.log(`Backend server listening on port ${port}`);
+  app.listen(server.port);
+  console.log(`Events API Backend server listening on port ${port}`);
 });
 
 /**
