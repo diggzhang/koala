@@ -11,8 +11,8 @@ import requireDir from 'require-dir';
  * Server configure
  */
 
-const port = server.port;
 const app = koa();
+const port = server.port;
 
 /**
  * Connect to database
@@ -40,7 +40,7 @@ mongoose.connection.on("connected", () => {
 });
 
 /**
- * MongoDB error.
+ * Connect MongoDB error
  */
 
 mongoose.connection.on('error', err => {
@@ -60,7 +60,7 @@ mongoose.connection.on('disconnected', () => {
 });
 
 /**
- * Stop the process when press Ctrl+c.
+ * Stop the process with Ctrl+c.
  */
 
 process.on('SIGINT', () => {

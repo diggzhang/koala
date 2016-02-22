@@ -1,6 +1,6 @@
 # koala
 
-the complete restful koajs app, use for onions event API request server now 
+the complete restful koajs app, use for onions event API request server
 
 # Getting started
 

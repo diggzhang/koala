@@ -1,39 +1,38 @@
-'use strict'
+"use strict";
 
-const router = require('koa-router')()
-const Event = require('Event')
-const assert = require('http-assert')
-const fs = require('fs')
-const jwt = require('koa-jwt')
+const router = require('koa-router')();
+const Event = require('Event');
+const assert = require('http-assert');
+const fs = require('fs');
+const jwt = require('koa-jwt');
 
 router.use('/events', function *(next) {
-  let ipAddress
-  let forwardedIpsStr = this.get('X-Forwarded-For')
-  let clientIp = this.get('X-Client-IP')
+  let ipAddress;
+  let forwardedIpsStr = this.get('X-Forwarded-For');
+  let clientIp = this.get('X-Client-IP');
   if (clientIp) {
     this.remoteIp = clientIp
-  }
-  else if (forwardedIpsStr) {
+  } else if (forwardedIpsStr) {
     // 'x-forwarded-for' header may return multiple IP addresses in
     // the format: "client IP, proxy 1 IP, proxy 2 IP" so take the
     // the first one
-    this.remoteIp = forwardedIpsStr.split(',')[0]
+    this.remoteIp = forwardedIpsStr.split(',')[0];
   }
-  yield next
-})
+  yield next;
+});
 
 router.all('/', function *() {
-  this.body = 'hi diggzhang'
-})
+  this.body = 'hi diggzhang';
+});
 
 router.post('/events', function *() {
-  yield Event.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip})
-  this.status = 204
-})
+  yield Event.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
+  this.status = 204;
+});
 
 // compatible for old version (app)
 router.post('/point', function *() {
-  this.status = 200
-})
+  this.status = 200;
+});
 
-module.exports = router
+module.exports = router;
