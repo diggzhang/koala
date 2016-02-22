@@ -1,12 +1,10 @@
-"use strict";
-import fs from 'fs';
 import koa from 'koa';
 import Router from 'koa-router';
 import logger from 'koa-logger';
 import json from 'koa-json';
 import bodyParser from 'koa-bodyparser';
 import mongoose from 'mongoose';
-import { server,mongo } from './config';
+import { server, mongo } from './config';
 import requireDir from 'require-dir';
 
 /**
@@ -15,7 +13,6 @@ import requireDir from 'require-dir';
 
 const port = server.port;
 const app = koa();
-
 
 /**
  * Connect to database
@@ -39,6 +36,7 @@ mongoose.connection.on("connected", () => {
 
   app.listen(server.port);
   console.log(`Events API Backend server listening on port ${port}`);
+
 });
 
 /**
