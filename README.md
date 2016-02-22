@@ -2,6 +2,8 @@
 
 the complete restful koajs app, use for onions event API request server
 
+![Koala Logo](./koala.jpg)
+
 # Getting started
 
 Install below npm packages:
