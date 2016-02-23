@@ -4,9 +4,9 @@
   "description": "the complete restful koajs app, use for event request server now :)",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_PATH=./src/controllers NODE_ENV=dev pm2-dev start ./index.js",
-    "prod": "NODE_PATH=./src/controllers NODE_ENV=prod pm2 start ./index.js",
-    "test": "node index.js"
+    "dev": "NODE_PATH=./src/controllers NODE_ENV=dev pm2-dev start ./trackServer.js",
+    "prod": "NODE_PATH=./src/controllers NODE_ENV=prod pm2 start ./trackServer.js",
+    "test": "node NODE_PATH=./src/controllers index.js"
   },
   "author": "centsent, diggzhang",
   "license": "ISC",
