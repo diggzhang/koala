@@ -2,9 +2,6 @@
 
 const router = require('koa-router')();
 const Event = require('Event');
-const assert = require('http-assert');
-const fs = require('fs');
-const jwt = require('koa-jwt');
 
 router.use('/events', function *(next) {
   let ipAddress;
@@ -28,11 +25,6 @@ router.all('/', function *() {
 router.post('/events', function *() {
   yield Event.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
   this.status = 204;
-});
-
-// compatible for old version (app)
-router.post('/point', function *() {
-  this.status = 200;
 });
 
 module.exports = router;

@@ -13,6 +13,8 @@ import requireDir from 'require-dir';
 
 const app = koa();
 const port = server.port;
+const env = server.env;
+
 
 /**
  * Connect to database
@@ -36,6 +38,7 @@ mongoose.connection.on("connected", () => {
 
   app.listen(server.port);
   console.log(`Events API Backend server listening on port ${port}`);
+  console.log(`Environment: ${env}`);
 
 });
 
@@ -60,7 +63,7 @@ mongoose.connection.on('disconnected', () => {
 });
 
 /**
- * Stop the process with Ctrl+c.
+ * Stop the process with Ctrl+C
  */
 
 process.on('SIGINT', () => {

@@ -5,26 +5,20 @@
  * 如果没有指定环境变量，默认加载dev.js.
  *
  * @author centsent
- *
- */
+ **/
 import _ from 'lodash';
 const env = process.env.NODE_ENV || 'dev';
 const envConfig = require(`./${env}`);
 
 const defaultOptions = {
-  server: {
-    port: 4500,
-  },
-  mongo: {
-    url: "mongodb://10.8.8.111/koala_dev",
-    opt: {
+  "mongo": {
+    "opt": {
       "server": {
         "socketOptions": {"keepAlive": 1},
         "poolSize": 100
       }
-    },
-  },
+    }
+  }
 };
-
 
 export default _.merge(defaultOptions, envConfig);

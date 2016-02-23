@@ -22,9 +22,9 @@ class EventController {
       if (item.platform2 === 'PC') {
         item.deviceAttr = {
           os: ua.os,
-          browser: ua.browser,
+          browser: ua.browser
         };
-      };
+      }
       assert(item.userAttr, 400, 'invalid userAttr param');
       item.userAttr.ip = header.ip;
 
@@ -38,15 +38,12 @@ class EventController {
       catch(e) {
         // throw new Error(`invalid ip ${header.ip}`)
         console.error(`invalid ip address ${header.ip}`)
-      };
+      }
     });
 
     yield Event.create(events);
-  }
-
-  static createUserId() {
-    return mongoose.Types.ObjectId();
   };
-};
+
+}
 
 module.exports = EventController;
