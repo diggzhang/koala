@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 echo "---------------------------------------------------"
-echo "xserver running..."
+echo "xserver backup code running..."
 echo "---------------------------------------------------"
 
 echo "call backdoor"
@@ -23,7 +23,7 @@ echo "start to 7za x" && \
 echo "already 7za x" && \
 
 echo "mongorestore" && \
-mongorestore --db onionsEventsDailyBackup--collection events ./onions/events.bson
+mongorestore --db onionsEventsDailyBackup --collection events ./onions/events.bson
 
 rm -rf ./onions
 echo "already clean dump file"
