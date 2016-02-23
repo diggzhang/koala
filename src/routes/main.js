@@ -1,7 +1,9 @@
 "use strict";
 
 const router = require('koa-router')();
+const pixie = require('koa-pixie-proxy');
 const Event = require('Event');
+const proxy = pixie({host: 'http://localhost:4500'});
 
 router.use('/events', function *(next) {
   let ipAddress;
@@ -23,6 +25,8 @@ router.use('/events', function *(next) {
 router.all('/', function *() {
   this.body = 'hi diggzhang';
 });
+
+router.post('/oldevents', proxy('/api/events'));
 
 router.post('/events', function *() {
   yield Event.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
