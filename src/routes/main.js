@@ -10,9 +10,11 @@ router.use('/events', function *(next) {
   if (clientIp) {
     this.remoteIp = clientIp
   } else if (forwardedIpsStr) {
-    // 'x-forwarded-for' header may return multiple IP addresses in
-    // the format: "client IP, proxy 1 IP, proxy 2 IP" so take the
-    // the first one
+    /**
+    * 'x-forwarded-for' header may return multiple IP addresses in
+    * the format: "client IP, proxy 1 IP, proxy 2 IP" so take the
+    * the first one
+    **/
     this.remoteIp = forwardedIpsStr.split(',')[0];
   }
   yield next;
