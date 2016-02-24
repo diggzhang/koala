@@ -16,7 +16,7 @@ echo "Backup date: "$BACKUP_DATE
 
 TODAYYEAR=(`date -d -1day '+%Y'`)
 TODAYMONTH=(`date -d -1day '+%m'`)
-TODAYDAY=(`date -d -1ay '+%d'`)
+TODAYDAY=(`date -d -1day '+%d'`)
 
 cd $WORK_DIR && \
 scp master@bd.yangcong345.com:/Backup/koalaDailyEventsBackup/$TODAYYEAR$TODAYMONTH$TODAYDAY.7z ./ && \
