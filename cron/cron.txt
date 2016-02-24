@@ -1,0 +1,3 @@
+cron example:
+
+01 1 * * * /bin/bash /home/master/koala/cron/xserver.sh >> /tmp/testcron.log

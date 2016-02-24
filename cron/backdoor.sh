@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+#TODO: create right log file
 echo "" >> /tmp/koaladailybackup.log
 echo "*************************************" >> /tmp/koaladailybackup.log
 echo "*                                   *" >> /tmp/koaladailybackup.log
@@ -6,6 +7,7 @@ echo "*         work on backdoor          *" >> /tmp/koaladailybackup.log
 echo "*                                   *" >> /tmp/koaladailybackup.log
 echo "*************************************" >> /tmp/koaladailybackup.log
 
+#TODO: change to right WORK_DIR
 WORK_DIR=/Backup/koalaDailyEventsBackup/
 DBHOSTNAME="mongo-t1"
 DB_NAME="koala"
@@ -24,11 +26,13 @@ mongo $DB_NAME --eval "db.events.renameCollection('yesterdayEvents')"
 
 cd $WORK_DIR && \
 
+#TODO: change to right mongo host collction name
 echo "ready to dump" >> /tmp/koaladailybackup.log
 time mongodump --host $DBHOSTNAME --db $DB_NAME --collection yesterdayEvents
 echo "already dump" >> /tmp/koaladailybackup.log
 
 echo "start to 7za a" >> /tmp/koaladailybackup.log
+rm -f $YEAR$MONTH$DAY.7z
 7za a $YEAR$MONTH$DAY.7z ./dump/*
 echo "already 7za a "$YEAR$MONTH$DAY.7z >> /tmp/koaladailybackup.log
 
