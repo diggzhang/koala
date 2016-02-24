@@ -1,34 +1,39 @@
-echo ""
-echo "---------- workon backdoor ----------"
-WORK_DIR=/Backup/dailyBackupEvents/
-HOSTNAME="mongo-t1"
+#!/usr/bin/env zsh
+echo "" >> /tmp/koaladailybackup.log
+echo "*************************************" >> /tmp/koaladailybackup.log
+echo "*                                   *" >> /tmp/koaladailybackup.log
+echo "*         work on backdoor          *" >> /tmp/koaladailybackup.log
+echo "*                                   *" >> /tmp/koaladailybackup.log
+echo "*************************************" >> /tmp/koaladailybackup.log
+
+WORK_DIR=/Backup/koalaDailyEventsBackup/
+DBHOSTNAME="mongo-t1"
 DB_NAME="koala"
 BACKUP_DATE="`date`"
-echo "Backup date: "$BACKUP_DATE
+echo "Backup date: "$BACKUP_DATE >> /tmp/koaladailybackup.log
 
-# convert to millonseconds use for mongo query
 YEAR=(`date -d -1day '+%Y'`)
 MONTH=(`date -d -1day '+%m'`)
 DAY=(`date -d -1day '+%d'`)
-echo "backup date " $YEAR $MONTH $DAY " && \
+
+echo "backup date"$YEAR $MONTH $DAY >> /tmp/koaladailybackup.log
+
+#TODO: this command need to run in mongo server
+echo "rename yesterday database" >> /tmp/koaladailybackup.log
+mongo $DB_NAME --eval "db.events.renameCollection('yesterdayEvents')"
 
 cd $WORK_DIR && \
 
-echo "ready to dump"
-time mongodump --host $HOSTNAME --db $DB_NAME --collection events
-echo "already dump"
+echo "ready to dump" >> /tmp/koaladailybackup.log
+time mongodump --host $DBHOSTNAME --db $DB_NAME --collection yesterdayEvents
+echo "already dump" >> /tmp/koaladailybackup.log
 
-echo "start to 7za a"
+echo "start to 7za a" >> /tmp/koaladailybackup.log
 7za a $YEAR$MONTH$DAY.7z ./dump/*
-echo "already 7za a $YEAR$MONTH$DAY.7z
+echo "already 7za a "$YEAR$MONTH$DAY.7z >> /tmp/koaladailybackup.log
 
 rm -rf ./dump
-echo "remove dump folder"
+echo "remove dump folder" >> /tmp/koaladailybackup.log
 
-echo "drop last day database"
-mongo $DB_NAME --eval "db.dropDatabase()"
-
-echo "code done"
-
-echo "---------- workon backdoor ----------"
-echo ""
+echo "backdoor koala backup code done" >> /tmp/koaladailybackup.log
+echo "" >> /tmp/koaladailybackup.log
