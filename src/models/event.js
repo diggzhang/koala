@@ -40,8 +40,7 @@ let eventSchema = new Schema({
     "role": {"type": String, "enum": ["teacher", "student"]},
     "ip": String,
     "ipLocation": String, // from pureQQ
-    "school": ObjectId, //only for users who registered his/her school
-    "schoolInfo": {type: Mixed}
+    "school": {type: Mixed} //only for users who registered his/her school
   },
   "url": String, //only for pc, the full url
   "platform": {"type": String, enum: ["web", "app", "share", "landing", "promotion", "vs"]}, //Required
