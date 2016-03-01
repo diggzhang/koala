@@ -37,7 +37,7 @@ let eventSchema = new Schema({
     "registDate": {type: Date, default: Date.now}, //Conditional optional, required if "isRegistered" is true, user's date of registration
     "activateDate": {type: Date}, //Conditional
     "from": String, // Conditional optional, required if "isRegistered" is true, user's from attr
-    "role": {"type": String, "enum": ["teacher", "student"]},
+    "role": {"type": String, "enum": ["teacher", "student", "editor"]},
     "ip": String,
     "ipLocation": String, // from pureQQ
     "school": {type: Mixed} //only for users who registered his/her school
