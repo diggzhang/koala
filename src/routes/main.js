@@ -3,6 +3,7 @@
 const router = require('koa-router')();
 const pixie = require('koa-pixie-proxy');
 const Event = require('Event');
+const Point = require('Point');
 const proxy = pixie({host: 'http://localhost:4500'});
 
 router.use('/events', function *(next) {
@@ -30,6 +31,11 @@ router.post('/oldevents', proxy('/api/events'));
 
 router.post('/events', function *() {
   yield Event.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
+  this.status = 204;
+});
+
+router.post('/point', function *() {
+  yield Point.save(this.request.body.points);
   this.status = 204;
 });
 
