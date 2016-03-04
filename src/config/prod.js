@@ -4,6 +4,6 @@ export default {
     "env": "prod"
   },
   "mongo": {
-    url: "mongodb://mongo-t1/koala",
+    url: "mongodb://mongoTrack/koala",
   }
 };
