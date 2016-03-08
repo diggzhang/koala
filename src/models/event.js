@@ -18,7 +18,7 @@ let eventSchema = new Schema({
     "idfa": String, //iOS app required, device idfa
     "version": String, //App required, app version name
     "os": {
-      "name": {type: String, required: true}, //Required, operating system name macos/linux/win for pc, android/ios/win for mobile
+      "name": {type: String}, //Required, operating system name macos/linux/win for pc, android/ios/win for mobile
       "version": String //Conditional optional, os version code
     },
     "model": {  //App conditional optional, mobile model information
