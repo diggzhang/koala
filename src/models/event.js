@@ -46,7 +46,8 @@ let eventSchema = new Schema({
   "platform": {"type": String, enum: ["web", "app", "share", "landing", "promotion", "vs"]}, //Required
   "platform2": {"type": String, enum: ["PC", "android", "iOS"]}, //Required
   "q": String,
-  "webChannel": String
+  "webChannel": String,
+  "channel": String
 });
 
 mongoose.model('Event', eventSchema);
