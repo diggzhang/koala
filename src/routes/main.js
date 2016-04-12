@@ -4,6 +4,7 @@ const router = require('koa-router')();
 const pixie = require('koa-pixie-proxy');
 const Event = require('Event');
 const Point = require('Point');
+const Event35 = require('Event35');
 const proxy = pixie({host: 'http://localhost:4500'});
 
 router.use('/events', function *(next) {
@@ -36,6 +37,28 @@ router.post('/events', function *() {
 
 router.post('/point', function *() {
   yield Point.save(this.request.body.points);
+  this.status = 204;
+});
+
+/*
+ * onions v3.5 event API
+ * POST http://track.yangcong345.com/api/v3.5/events
+ */
+
+router.use('/v3.5/events', function *(next) {
+  let forwardedIpsStr = this.get('X-Forwarded-For');
+  let clientIp = this.get('X-Client-IP');
+  if (clientIp) {
+    this.remoteIp = clientIp;
+  } else if (forwardedIpsStr) {
+    this.remoteIp = forwardedIpsStr.split(',')[0];
+  }
+
+  yield next;
+});
+
+router.post('/v3.5/events', function *() {
+  yield Event35.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip, url: this.request.href});
   this.status = 204;
 });
 
