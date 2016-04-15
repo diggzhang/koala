@@ -10,7 +10,7 @@ const proxy = pixie({host: 'http://localhost:4500'});
 router.use('/events', function *(next) {
   let ipAddress;
   let forwardedIpsStr = this.get('X-Forwarded-For');
-  let clientIp = this.get('X-Client-IP');
+  let clientIp = this.header['remoteip'];
   if (clientIp) {
     this.remoteIp = clientIp
   } else if (forwardedIpsStr) {
@@ -45,9 +45,9 @@ router.post('/point', function *() {
  * POST http://track.yangcong345.com/api/v3.5/events
  */
 
-router.use('/v3.5/events', function *(next) {
+router.use('/v3_5/events', function *(next) {
   let forwardedIpsStr = this.get('X-Forwarded-For');
-  let clientIp = this.get('X-Client-IP');
+  let clientIp = this.header['remoteip'];
   if (clientIp) {
     this.remoteIp = clientIp;
   } else if (forwardedIpsStr) {
@@ -57,7 +57,7 @@ router.use('/v3.5/events', function *(next) {
   yield next;
 });
 
-router.post('/v3.5/events', function *() {
+router.post('/v3_5/events', function *() {
   yield Event35.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip, url: this.request.href});
   this.status = 204;
 });
