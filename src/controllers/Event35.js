@@ -3,7 +3,9 @@
 import mongoose from 'mongoose';
 import _ from 'lodash';
 const Event35 = mongoose.model('Event35');
-const qqwry = require('lib-qqwry').info();
+const libqqwry = require('lib-qqwry');
+const qqwry = libqqwry.init();
+qqwry.speed();
 const assert = require('http-assert');
 
 class Event35Controller {

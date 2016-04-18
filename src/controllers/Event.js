@@ -4,7 +4,9 @@ import mongoose from 'mongoose';
 import UAParser from 'ua-parser-js';
 import _ from 'lodash';
 const Event = mongoose.model('Event');
-const qqwry = require('lib-qqwry').info();
+const libqqwry = require('lib-qqwry');
+const qqwry = libqqwry.init();
+qqwry.speed();
 const assert = require('http-assert');
 
 class EventController {
