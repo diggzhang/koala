@@ -58,7 +58,7 @@ router.use('/v3_5/events', function *(next) {
 });
 
 router.post('/v3_5/events', function *() {
-  yield Event35.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip, url: this.request.href});
+  yield Event35.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
   this.status = 204;
 });
 

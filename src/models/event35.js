@@ -22,7 +22,7 @@ let event35Schema = new Schema({
     "appVersion": String
   },
   "ua": String, //server do it
-  "url": String, //server do it
+  "url": String,
   "channel": String,
   "category": String, // to string
   "platform": {type: String, enum: ["web", "app", "share", "m", "promotion", "vs", "backend"]}, //Required

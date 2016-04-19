@@ -19,7 +19,6 @@ class Event35Controller {
         400, 'invalid platform param');
       assert(item.eventKey, 400, 'invalid eventKey param');
       assert(item.eventTime, 400, 'invalid eventTime param');
-      item.url = header.url;
       item.ua = header.ua;
       item.ip = header.ip;
       try {
