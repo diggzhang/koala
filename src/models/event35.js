@@ -21,14 +21,14 @@ let event35Schema = new Schema({
     },
     "appVersion": String
   },
-  "ua": String,
-  "url": String, //only for pc, the full url
+  "ua": String, //server do it
+  "url": String, //server do it
   "channel": String,
   "category": String, // to string
   "platform": {type: String, enum: ["web", "app", "share", "m", "promotion", "vs", "backend"]}, //Required
   "os": {type: String, enum: ["pc", "android", "ios"]},
-  "ip": String,
-  "location": {type: Mixed, default: null},
+  "ip": String, //server do it
+  "location": {type: Mixed, default: null}, // server do it
   "user": ObjectId, //Required when user logged in, its user id
   "role": {"type": String, "enum": ["teacher", "student", "editor", "visitor"]},
   "eventTime": {type: Number, required: true}, //Required, timeStamp of points generated, unix epoch time (in ms)
