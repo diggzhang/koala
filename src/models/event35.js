@@ -10,17 +10,7 @@ let event35Schema = new Schema({
   "eventValue": {type: Mixed},
   "device": String, //Required, unique id for pc, imei for android, idfa for ios
   "deviceOld": String,
-  "deviceAttr": {
-    "os": {
-      "name": String, //Required, operating system name macos/linux/win for pc, android/ios/win for mobile
-      "version": String //Conditional optional, os version code
-    },
-    "model": {  //App conditional optional, mobile model information
-      "brand": String ,
-      "name": String
-    },
-    "appVersion": String
-  },
+  "deviceAttr": {type: Mixed},
   "ua": String, //server do it
   "url": String,
   "channel": String,
