@@ -2,7 +2,7 @@
 
 import bodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
-import cors from 'koa-cors';
+import cors from 'kcors';
 import Router from 'koa-router';
 const errorTrace = require('../lib/error-trace');
 const decompress = require('../lib/HttpDecompress');
@@ -14,7 +14,10 @@ router.use(
 
 module.exports = function (app) {
   app
-    .use(cors({expose: ['Authorization']}))
+    .use(cors({
+      "exposeHeaders": ["Accept-Ranges", "Content-Encoding", "Content-Length", "Content-Range", "Authorization"],
+      "maxAge": "3600"
+    }))
     .use(logger())
     .use(errorTrace())
     .use(decompress())
