@@ -19,9 +19,9 @@ let event35Schema = new Schema({
   "os": {type: String, enum: ["pc", "android", "ios"]},
   "ip": String, //server do it
   "location": {type: Mixed, default: null}, // server do it
-  "user": ObjectId, //Required when user logged in, its user id
+  "user": {type:ObjectId, default: null}, //Required when user logged in, its user id
   //"role": {"type": String, "enum": ["teacher", "student", "editor", "visitor"]},
-  "role": {"type": String},
+  "role": {"type": String, default: null},
   "eventTime": {type: Number, required: true}, //Required, timeStamp of points generated, unix epoch time (in ms)
   "serverTime": {type: Date, default: Date.now} //Server required, Time recorded by server
 });
