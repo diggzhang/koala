@@ -14,11 +14,17 @@ class Event35Controller {
   };
 
   static *save(events, header) {
+    if (_.isArray(events) == false) {
+      events = _.concat(events,[]);
+    }
     events.map(item => {
       assert(_.includes(['web', 'app', 'share', 'm', 'promotion', 'vs', 'backend'], item.platform),
         400, 'invalid platform param');
       assert(item.eventKey, 400, 'invalid eventKey param');
       assert(item.eventTime, 400, 'invalid eventTime param');
+      if (item.user == "") {
+        delete item.user;
+      }
       item.ua = header.ua;
       item.ip = header.ip;
       try {
