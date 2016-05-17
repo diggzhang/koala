@@ -15,7 +15,8 @@ let event35Schema = new Schema({
   "url": String,
   "channel": String,
   "category": String, // to string
-  "platform": {type: String, enum: ["web", "app", "share", "m", "promotion", "vs", "backend"]}, //Required
+  //"platform": {type: String, enum: ["web", "app", "share", "m", "promotion", "vs", "backend"]}, //Required
+  "platform": {type: String, default: null}, //Required
   "os": {type: String, enum: ["pc", "android", "ios"]},
   "ip": String, //server do it
   "location": {type: Mixed, default: null}, // server do it
