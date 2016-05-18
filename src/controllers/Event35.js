@@ -33,7 +33,12 @@ class Event35Controller {
       }
     });
 
-    yield Event35.create(events);
+    try {
+      yield Event35.create(events);
+    } catch (e) {
+      console.error(e);
+      console.error(events);
+    }
   };
 }
 
