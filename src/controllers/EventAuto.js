@@ -9,7 +9,6 @@ class EventAutoController {
   };
 
   static *save(events) {
-    console.info(events);
 
     try {
       EventAuto.create(events);
