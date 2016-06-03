@@ -5,6 +5,7 @@ const pixie = require('koa-pixie-proxy');
 const Event = require('Event');
 const Point = require('Point');
 const Event35 = require('Event35');
+const EventAuto = require('EventAuto');
 const proxy = pixie({host: 'http://localhost:4500'});
 
 router.use('/events', function *(next) {
@@ -42,7 +43,7 @@ router.post('/point', function *() {
 
 /*
  * onions v3.5 event API
- * POST http://track.yangcong345.com/api/v3.5/events
+ * POST http://track.yangcong345.com/api/v3_5/events
  */
 
 router.use('/v3_5/events', function *(next) {
@@ -59,6 +60,16 @@ router.use('/v3_5/events', function *(next) {
 
 router.post('/v3_5/events', function *() {
   yield Event35.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
+  this.status = 204;
+});
+
+/*
+ * onions v3.6 auto send events API
+ * POST http://track.yangcong345.com/api/v3_6/autoevents
+ */
+
+router.post('/v3_6/autoevents', function *() {
+  yield EventAuto.save(this.request.body);
   this.status = 204;
 });
 
