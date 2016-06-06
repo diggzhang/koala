@@ -25,6 +25,6 @@ let event35Schema = new Schema({
   "role": {"type": String, default: null},
   "eventTime": {type: Number, required: true}, //Required, timeStamp of points generated, unix epoch time (in ms)
   "serverTime": {type: Date, default: Date.now} //Server required, Time recorded by server
-});
+}, {"strict": false, "validateBeforeSave":false});
 
 mongoose.model('Event35', event35Schema);

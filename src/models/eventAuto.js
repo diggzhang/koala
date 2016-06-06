@@ -6,6 +6,6 @@ const ObjectId = Schema.Types.ObjectId;
 const Mixed = Schema.Types.Mixed;
 
 let eventAutoSchema = new Schema({
-}, {"strict": false});
+}, {"strict": false, "validateBeforeSave":false});
 
 mongoose.model('EventAuto', eventAutoSchema);

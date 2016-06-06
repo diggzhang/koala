@@ -48,6 +48,6 @@ let eventSchema = new Schema({
   "q": String,
   "webChannel": String,
   "channel": String
-});
+}, {"strict": false, "validateBeforeSave":false});
 
 mongoose.model('Event', eventSchema);

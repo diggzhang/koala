@@ -25,6 +25,6 @@ var PointSchema = new Schema({
     type: String,
     default: 'pc'
   }
-});
+}, {"strict": false, "validateBeforeSave":false});
 
 mongoose.model('Point', PointSchema);
