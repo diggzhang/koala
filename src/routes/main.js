@@ -7,29 +7,7 @@ const Point = require('Point');
 const Event35 = require('Event35');
 const EventAuto = require('EventAuto');
 const proxy = pixie({host: 'http://localhost:4500'});
-const request = require('request').defaults({
-  json: true
-});
-
-function *requestPromise(url, method, header, body) {
-  delete header["content-length"];
-  return new Promise(function (resolve, reject) {
-    request({
-      method: method,
-      url: url,
-      body: body,
-      headers: header
-    }, function(error, httpResponse, body) {
-      if (error) {
-        console.error(url + " : " + error);
-      } else if (httpResponse.statusCode !== 204) {
-        reject(body.message);
-      } else {
-        resolve(body);
-      }
-    });
-  });
-}
+var rp = require('request-promise');
 
 router.use('/events', function *(next) {
   let ipAddress;
@@ -95,10 +73,29 @@ router.post('/v3_6/autoevents', function *() {
   yield EventAuto.save(this.request.body);
 
   let akkaEndConfig = {
-    url: "http://10.47.108.72:8080/v3_6/autoevents",
-    method: 'POST'
+    method: 'POST',
+    uri: "http://10.47.108.72:8080/v3_6/autoevents",
+    header: this.header,
+    body: this.request.body
   };
-  yield requestPromise(akkaEndConfig.url, akkaEndConfig.method, this.header, this.request.body);
+
+  delete akkaEndConfig.header["content-length"];
+
+  let options = {
+    uri: akkaEndConfig.uri,
+    method: akkaEndConfig.method,
+    body: akkaEndConfig.body,
+    headers: akkaEndConfig.header,
+    json: true
+  };
+
+  rp(options)
+    .then(function (parsedBody) {
+    })
+    .catch(function (err) {
+      if (err) console.error(err);
+    });
+
   this.status = 204;
 });
 
