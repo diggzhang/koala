@@ -71,21 +71,14 @@ router.post('/v3_5/events', function *() {
 
 router.post('/v3_6/autoevents', function *() {
   yield EventAuto.save(this.request.body);
-
-  let akkaEndConfig = {
-    method: 'POST',
-    uri: "http://10.47.108.72:8080/v3_6/autoevents",
-    header: this.header,
-    body: this.request.body
-  };
-
-  delete akkaEndConfig.header["content-length"];
+  this.header["accept"] = "*/*";
+  delete this.header["content-length"];
 
   let options = {
-    uri: akkaEndConfig.uri,
-    method: akkaEndConfig.method,
-    body: akkaEndConfig.body,
-    headers: akkaEndConfig.header,
+    uri: "http://10.47.108.72:8080/v3_6/autoevents",
+    method: "POST",
+    body: this.request.body,
+    headers: this.header,
     json: true
   };
 
