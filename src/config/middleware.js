@@ -21,6 +21,6 @@ module.exports = function (app) {
     .use(logger())
     .use(errorTrace())
     .use(decompress())
-    .use(bodyParser({"jsonLimit":"5mb"}))
+    .use(bodyParser({"jsonLimit":"16mb"}))
     .use(router.routes())
 };
