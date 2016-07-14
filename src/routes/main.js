@@ -73,9 +73,10 @@ router.post('/v3_6/autoevents', function *() {
   yield EventAuto.save(this.request.body);
   this.header["accept"] = "*/*";
   delete this.header["content-length"];
+  //this.header["content-type"] = "application/json";  //diggzhang: find this configure online
 
   let options = {
-    uri: "http://10.47.108.72:8080/v3_6/autoevents",
+    uri: "http://10.47.108.72:8080/api/v3_6/autoevents",
     method: "POST",
     body: this.request.body,
     headers: this.header,
