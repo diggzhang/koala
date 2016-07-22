@@ -11,7 +11,7 @@ module.exports = function() {
 
     let string = yield getRawBody(gunzip, {
       length: this.length,
-      limit: '1mb',
+      limit: '16mb',
       encoding: this.charset
     });
     this.request.body = JSON.parse(string.toString());
