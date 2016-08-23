@@ -6,6 +6,7 @@ const Event = require('Event');
 const Point = require('Point');
 const Event35 = require('Event35');
 const EventAuto = require('EventAuto');
+const EventV4= require('EventV4');
 const proxy = pixie({host: 'http://localhost:4500'});
 const rp = require('request-promise');
 
@@ -109,6 +110,24 @@ router.post('/v3_6/autoevents', function *() {
       if (err) console.error(err);
     });
 
+  this.status = 204;
+});
+
+
+router.use('/v4/events', function *(next) {
+  let forwardedIpsStr = this.get('X-Forwarded-For');
+  let clientIp = this.header['remoteip'];
+  if (clientIp) {
+    this.remoteIp = clientIp;
+  } else if (forwardedIpsStr) {
+    this.remoteIp = forwardedIpsStr.split(',')[0];
+  }
+
+  yield next;
+});
+
+router.post('/v4/events', function *() {
+  yield EventV4.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
   this.status = 204;
 });
 
