@@ -63,7 +63,8 @@ router.use('/v3_5/events', function *(next) {
 
 router.post('/v3_5/events', function *() {
   yield Event35.save(this.request.body, {ua: this.header['user-agent'], ip: this.remoteIp || this.ip});
-  this.header["accept"] = "*/*";
+  /**
+  this.header["accept"] = "*\/*";
   delete this.header["content-length"];
   this.header["content-type"] = "application/json";  //diggzhang: find this configure online
   delete this.header["content-encoding"];
@@ -82,6 +83,7 @@ router.post('/v3_5/events', function *() {
     .catch(function (err) {
       if (err) console.error(err);
     });
+  **/
   this.status = 204;
 });
 
@@ -92,7 +94,8 @@ router.post('/v3_5/events', function *() {
 
 router.post('/v3_6/autoevents', function *() {
   yield EventAuto.save(this.request.body);
-  this.header["accept"] = "*/*";
+  /**
+  this.header["accept"] = "*\/*";
   delete this.header["content-length"];
   //this.header["content-type"] = "application/json";  //diggzhang: find this configure online
 
@@ -110,7 +113,7 @@ router.post('/v3_6/autoevents', function *() {
     .catch(function (err) {
       if (err) console.error(err);
     });
-
+  */
   this.status = 204;
 });
 
@@ -138,7 +141,6 @@ router.post('/v4/events', function *() {
 /**
  * API POST /api/log
  */
-
 router.use('/log', function *(next) {
   let forwardedIpsStr = this.get('X-Forwarded-For');
   let clientIp = this.header['remoteip'];
