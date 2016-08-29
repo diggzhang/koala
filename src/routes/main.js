@@ -93,7 +93,7 @@ router.post('/v3_5/events', function *() {
  */
 
 router.post('/v3_6/autoevents', function *() {
-  yield EventAuto.save(this.request.body);
+  // yield EventAuto.save(this.request.body);
   /**
   this.header["accept"] = "*\/*";
   delete this.header["content-length"];
@@ -117,6 +117,10 @@ router.post('/v3_6/autoevents', function *() {
   this.status = 204;
 });
 
+router.post('/v4/autoevents', function *() {
+  yield EventAuto.save(this.request.body);
+  this.status = 204;
+});
 
 /**
  * API POST /api/v4/events
