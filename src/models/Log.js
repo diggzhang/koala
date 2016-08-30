@@ -26,6 +26,7 @@ const Mixed = Schema.Types.Mixed;
  */
 
 let logSchema = new Schema({
+  "serverTime": {type: Date, default: Date.now} //Server required, Time recorded by server
 }, {"strict": false, "validateBeforeSave": false});
 
 mongoose.model('Log', logSchema);
