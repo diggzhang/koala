@@ -17,23 +17,13 @@ class EventController {
   static *save(events, header) {
     let ua = (new UAParser(header.ua)).getResult();
     events.map(item => {
-      assert(_.includes(['web', 'app', 'share', 'landing', 'promotion', 'vs'], item.platform),
-        400, 'invalid platform param');
-      assert(_.includes(['PC', 'android', 'iOS'], item.platform2), 400, 'invalid platform2 param');
-
       if (item.platform2 === 'PC') {
         item.deviceAttr = {
           os: ua.os,
           browser: ua.browser
         };
       }
-      assert(item.userAttr, 400, 'invalid userAttr param');
       item.userAttr.ip = header.ip;
-
-      assert(item.eventKey, 400, 'invalid eventKey param');
-      assert(_.includes(['site', 'course', 'video', 'problem'], item.category), 400, 'invalid category param');
-      assert(item.eventTime, 400, 'invalid eventTime param');
-      assert(item.deviceAttr.os && item.deviceAttr.os.name, 400, 'invalid os.name param');
       try {
         item.userAttr.ipLocation = qqwry.searchIP(header.ip).Country
       }
