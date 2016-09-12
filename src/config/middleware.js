@@ -5,7 +5,8 @@ import logger from 'koa-logger';
 import cors from 'kcors';
 import Router from 'koa-router';
 const errorTrace = require('../lib/error-trace');
-const decompress = require('../lib/HttpDecompress');
+const proxy = require('../lib/HttpProxy');
+const decompres = require('../lib/HttpDecompress');
 const router = new Router({prefix: '/api'});
 
 router.use(
@@ -20,7 +21,8 @@ module.exports = function (app) {
     }))
     .use(logger())
     .use(errorTrace())
-    .use(decompress())
+    .use(proxy())
+    .use(decompres())
     .use(bodyParser({"jsonLimit":"16mb"}))
     .use(router.routes())
 };
